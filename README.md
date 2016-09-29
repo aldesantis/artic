@@ -101,8 +101,8 @@ This is where the fun part begins. Suppose you want to get your work hours on Mo
 ```ruby
 calendar.available_slots_on(:monday)
 # => [
-#      TimeRange<09:00..13:00>,
-#      TimeRange<15:00..19:00>
+#   TimeRange<09:00..13:00>,
+#   TimeRange<15:00..19:00>
 # ]
 
 # We overrode this, remember?
