@@ -1,6 +1,6 @@
 # Agenda
 
-Let Ruby manage your agenda. Errrm, _calendar_.
+Let Ruby manage your agenda. Err, _calendar_.
 
 ## Installation
 
