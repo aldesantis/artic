@@ -140,7 +140,7 @@ will create a git tag for the version, push git commits and tags, and push the `
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/agenda.
+Bug reports and pull requests are welcome on GitHub at https://github.com/alessandro1997/agenda.
 
 
 ## License
