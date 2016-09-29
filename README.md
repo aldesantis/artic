@@ -96,7 +96,7 @@ calendar.occupations << Agenda::Occupation.new(Range.new(
 
 ### Computing available slots
 
-This is where the fun part begins. Suppose you want to get your general availability on Mondays:
+This is where the fun part begins. Suppose you want to get your work hours on Mondays:
 
 ```ruby
 calendar.available_slots_on(:monday)
@@ -114,7 +114,7 @@ calendar.available_slots_on(Date.parse('2016-10-03'))
 
 ### Computing free slots
 
-Or maybe you want to see when you're available on a particular Monday?
+Or maybe you want to see when you have time for a meeting a particular Monday?
 
 In that case, use `#free_slots_on` and we'll take care of removing any occupied times from your
 available slots:
