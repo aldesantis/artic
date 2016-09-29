@@ -1,8 +1,6 @@
 # Agenda
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/agenda`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Let Ruby manage your agenda. Errrm, _calendar_.
 
 ## Installation
 
@@ -24,9 +22,13 @@ Or install it yourself as:
 
 First of all, you will need to create a new calendar and specify its timezone:
 
+### Configuring your calendar
+
 ```ruby
 calendar = Agenda::Calendar.new(timezone: 'UTC')
 ```
+
+### Setting available times
 
 Now you can start defining the free slots in your calendar:
 
@@ -72,6 +74,8 @@ calendar.availabilities << Agenda::AvailabilitySlot.new(
 )
 ```
 
+### Defining occupations
+
 You can also define some specific when you will _not_ be available:
 
 ```ruby
@@ -90,6 +94,8 @@ calendar.occupations << Agenda::Occupation.new(Range.new(
 ))
 ```
 
+### Computing available slots
+
 This is where the fun part begins. Suppose you want to get your general availability on Mondays:
 
 ```ruby
@@ -100,13 +106,18 @@ calendar.available_slots_on(:monday)
 # ]
 ```
 
+### Computing free slots
+
 Or maybe you want to see when you're available on a particular Monday?
+
+In that case, pass a date to `#available_slots_on` and we'll take care of removing any occupied
+times from your availability slots:
 
 ```ruby
 calendar.available_slots_on(Date.parse('2016-09-26'))
 # => [
 #   ActiveSupport::TimeWithZone<2016-09-26 09:00>..ActiveSupport::TimeWithZone<2016-09-26 13:00>,
-#   ActiveSupport::TimeWithZone<2016-09-26 15:00>..ActiveSupport::TimeWithZone<2016-09-26 19:00>
+#   ActiveSupport::TimeWithZone<2016-09-26 15:00>..ActiveSupport::TimeWithZone<2016-09-26 18:00>
 # ]
 
 # We overrode this, remember?
@@ -118,9 +129,14 @@ calendar.free_slots_on(Date.parse('2016-10-03'))
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run
+the tests. You can also run `bin/console` for an interactive prompt that will allow you to
+experiment.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+To install this gem onto your local machine, run `bundle exec rake install`. To release a new
+version, update the version number in `version.rb`, and then run `bundle exec rake release`, which
+will create a git tag for the version, push git commits and tags, and push the `.gem` file to
+[rubygems.org](https://rubygems.org).
 
 ## Contributing
 
@@ -130,4 +146,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/[USERN
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
