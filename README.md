@@ -76,7 +76,7 @@ calendar.availabilities << Agenda::AvailabilitySlot.new(
 
 ### Defining occupations
 
-You can also define some specific when you will _not_ be available:
+You can also define some specific dates when you will be busy with something:
 
 ```ruby
 calendar.occupations << Agenda::Occupation.new(Range.new(
