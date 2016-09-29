@@ -142,7 +142,14 @@ will create a git tag for the version, push git commits and tags, and push the `
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/alessandro1997/agenda.
 
-
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+## To do
+
+- [ ] Find another name (`agenda` is taken)
+- [ ] Add support for buffer (e.g. I want 15 minutes between meetings)
+- [ ] Allow passing a timezone when defining availabilities
+- [ ] Write implementation
+- [ ] Write tests
