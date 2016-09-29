@@ -22,58 +22,97 @@ Or install it yourself as:
 
 ## Usage
 
+First of all, you will need to create a new calendar and specify its timezone:
+
 ```ruby
 calendar = Agenda::Calendar.new(timezone: 'UTC')
+```
 
+Now you can start defining the free slots in your calendar:
+
+```ruby
 calendar.availabilities << Agenda::AvailabilitySlot.new(
   :monday,
-  '09:00'..'11:00' # converted to TimeRange internally
+  '09:00'..'11:00'
 )
 
 calendar.availabilities << Agenda::AvailabilitySlot.new(
   :monday,
-  '11:00'..'13:00' # converted to TimeRange internally
+  '11:00'..'13:00'
 )
 
 calendar.availabilities << Agenda::AvailabilitySlot.new(
   :monday,
-  '15:00'..'19:00' # converted to TimeRange internally
+  '15:00'..'19:00'
+)
+```
+
+If you want, you can also use specific dates in place of days of the week:
+
+```ruby
+calendar.availabilities << Agenda::AvailabilitySlot.new(
+  Date.parse('2016-10-03'),
+  '15:00'..'19:00'
+)
+```
+
+Or you can mix the two! In this case, we won't consider the availability slots for that day of the
+week when calculating availabilities:
+
+```ruby
+calendar.availabilities << Agenda::AvailabilitySlot.new(
+  :monday,
+  '09:00'..'17:00'
 )
 
-# Boring meeting during my regular work hours
+# Only available 15-19 on Monday, October 3, 2016.
+calendar.availabilities << Agenda::AvailabilitySlot.new(
+  Date.parse('2016-10-03'),
+  '15:00'..'19:00'
+)
+```
+
+You can also define some specific when you will _not_ be available:
+
+```ruby
 calendar.occupations << Agenda::Occupation.new(Range.new(
   ActiveSupport::TimeZone['Berlin'].parse('2016-09-26 10:00:00'),
   ActiveSupport::TimeZone['Berlin'].parse('2016-09-26 12:00:00')
 ))
+```
 
-# Boring meeting that ends after my regular work hours
+The times do not have to respect your availability slots:
+
+```ruby
 calendar.occupations << Agenda::Occupation.new(Range.new(
   ActiveSupport::TimeZone['Berlin'].parse('2016-09-26 18:00:00'),
   ActiveSupport::TimeZone['Berlin'].parse('2016-09-26 20:00:00')
 ))
+```
 
-# Get my work hours (free or not) for Mondays
+This is where the fun part begins. Suppose you want to get your general availability on Mondays:
+
+```ruby
 calendar.available_slots_on(:monday)
-# =>
-# [
+# => [
 #      TimeRange<09:00..13:00>,
 #      TimeRange<15:00..19:00>
 # ]
+```
 
-# Get my work hours (free or not) for a specific Monday
+Or maybe you want to see when you're available on a particular Monday?
+
+```ruby
 calendar.available_slots_on(Date.parse('2016-09-26'))
-# =>
-# [
+# => [
 #   ActiveSupport::TimeWithZone<2016-09-26 09:00>..ActiveSupport::TimeWithZone<2016-09-26 13:00>,
 #   ActiveSupport::TimeWithZone<2016-09-26 15:00>..ActiveSupport::TimeWithZone<2016-09-26 19:00>
 # ]
 
-# Get my free slots for a specific
-calendar.free_slots_on(Date.parse('2016-09-26'))
-# =>
-# [
-#   ActiveSupport::TimeWithZone<2016-09-26 09:00>..ActiveSupport::TimeWithZone<2016-09-26 10:00>,
-#   ActiveSupport::TimeWithZone<2016-09-26 12:00>..ActiveSupport::TimeWithZone<2016-09-26 13:00>
+# We overrode this, remember?
+calendar.free_slots_on(Date.parse('2016-10-03'))
+# => [
+#   ActiveSupport::TimeWithZone<2016-09-26 15:00>..ActiveSupport::TimeWithZone<2016-09-26 19:00>
 # ]
 ```
 
