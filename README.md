@@ -104,26 +104,26 @@ calendar.available_slots_on(:monday)
 #      TimeRange<09:00..13:00>,
 #      TimeRange<15:00..19:00>
 # ]
+
+# We overrode this, remember?
+calendar.available_slots_on(Date.parse('2016-10-03'))
+# => [
+#   ActiveSupport::TimeWithZone<2016-09-26 15:00>..ActiveSupport::TimeWithZone<2016-09-26 19:00>
+# ]
 ```
 
 ### Computing free slots
 
 Or maybe you want to see when you're available on a particular Monday?
 
-In that case, pass a date to `#available_slots_on` and we'll take care of removing any occupied
-times from your availability slots:
+In that case, use `#free_slots_on` and we'll take care of removing any occupied times from your
+available slots:
 
 ```ruby
-calendar.available_slots_on(Date.parse('2016-09-26'))
+calendar.free_slots_on(Date.parse('2016-09-26'))
 # => [
 #   ActiveSupport::TimeWithZone<2016-09-26 09:00>..ActiveSupport::TimeWithZone<2016-09-26 13:00>,
 #   ActiveSupport::TimeWithZone<2016-09-26 15:00>..ActiveSupport::TimeWithZone<2016-09-26 18:00>
-# ]
-
-# We overrode this, remember?
-calendar.free_slots_on(Date.parse('2016-10-03'))
-# => [
-#   ActiveSupport::TimeWithZone<2016-09-26 15:00>..ActiveSupport::TimeWithZone<2016-09-26 19:00>
 # ]
 ```
 
