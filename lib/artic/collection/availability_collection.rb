@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Artic
   module Collection
     class AvailabilityCollection < Array
@@ -15,7 +16,7 @@ module Artic
 
               accumulator << Availability.new(availability.identifier, new_time_range)
             else
-              accumulator += [last_availability, availability]
+              accumulator + [last_availability, availability]
             end
           end
         end

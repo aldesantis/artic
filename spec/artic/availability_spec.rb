@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Artic::Availability do
   subject(:availability) { described_class.new(date_or_dow, time_range) }
 

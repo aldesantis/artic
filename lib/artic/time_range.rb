@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Artic
   class TimeRange < Range
     TIME_REGEX = /\A^(0\d|1\d|2[0-3]):[0-5]\d$\z/

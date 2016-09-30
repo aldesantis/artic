@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 module Artic
   class Calendar
     attr_reader :availabilities, :occupations

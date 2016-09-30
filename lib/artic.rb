@@ -1,6 +1,7 @@
+# frozen_string_literal: true
 require 'tzinfo'
 
-require "artic/version"
+require 'artic/version'
 
 require 'artic/time_range'
 

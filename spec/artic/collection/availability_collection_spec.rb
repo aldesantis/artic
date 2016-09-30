@@ -1,3 +1,4 @@
+# frozen_string_literal: true
 RSpec.describe Artic::Collection::AvailabilityCollection do
   subject(:collection) { described_class.new(availabilities) }
 
@@ -14,7 +15,7 @@ RSpec.describe Artic::Collection::AvailabilityCollection do
 
   describe '#normalize' do
     it 'returns another AvailabilityCollection' do
-      expect(collection.normalize).to be_instance_of(Artic::Collection::AvailabilityCollection)
+      expect(collection.normalize).to be_instance_of(described_class)
     end
 
     it 'sorts and merges contiguous slots together' do

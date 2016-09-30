@@ -1,13 +1,18 @@
+# frozen_string_literal: true
 module Artic
   class Availability
-    DAYS_OF_WEEK = %i(monday tuesday wednesday thursday friday saturday sunday)
+    DAYS_OF_WEEK = %i(monday tuesday wednesday thursday friday saturday sunday).freeze
 
     attr_reader :day_of_week, :date, :time_range
 
     def initialize(dow_or_date, time_range)
       @date = dow_or_date if dow_or_date.is_a?(Date)
       @day_of_week = (@date ? @date.strftime('%A').downcase : dow_or_date).to_sym
-      @time_range = time_range.is_a?(TimeRange) ? time_range : TimeRange.new(time_range.min, time_range.max)
+      @time_range = if time_range.is_a?(TimeRange)
+        time_range
+      else
+        TimeRange.new(time_range.min, time_range.max)
+      end
 
       validate_day_of_week
     end
