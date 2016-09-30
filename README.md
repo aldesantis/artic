@@ -1,6 +1,6 @@
 # A.R.TI.C.
 
-*A* *R*uby gem for *TI*me *C*omputations.
+**A** **R**uby gem for **TI**me **C**omputations.
 
 ## Installation
 
