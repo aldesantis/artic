@@ -20,12 +20,10 @@ Or install it yourself as:
 
 ## Usage
 
-First of all, you will need to create a new calendar and specify its timezone:
-
-### Configuring your calendar
+First of all, you will need to create a new calendar:
 
 ```ruby
-calendar = Artic::Calendar.new(timezone: 'UTC')
+calendar = Artic::Calendar.new
 ```
 
 ### Setting available times
@@ -80,8 +78,8 @@ You can also define some specific slots when you will be busy with something:
 
 ```ruby
 calendar.occupations << Artic::Occupation.new(Range.new(
-  ActiveSupport::TimeZone['Berlin'].parse('2016-09-26 10:00:00'),
-  ActiveSupport::TimeZone['Berlin'].parse('2016-09-26 12:00:00')
+  DateTime.parse('2016-09-26 10:00:00'),
+  DateTime.parse('2016-09-26 12:00:00')
 ))
 ```
 
@@ -89,8 +87,8 @@ The times do not have to respect your availability slots:
 
 ```ruby
 calendar.occupations << Artic::Occupation.new(Range.new(
-  ActiveSupport::TimeZone['Berlin'].parse('2016-09-26 18:00:00'),
-  ActiveSupport::TimeZone['Berlin'].parse('2016-09-26 20:00:00')
+  DateTime.parse('2016-09-26 18:00:00'),
+  DateTime.parse('2016-09-26 20:00:00')
 ))
 ```
 
