@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 module Artic
   module Collection
-    class OccupationCollection < SimpleDelegator
-      def initialize(elements = [])
-        super([] + elements)
-      end
+    # Keeps a collection of occupations.
+    #
+    # @author Alessandro Desantis
+    class OccupationCollection < Array
     end
   end
 end
