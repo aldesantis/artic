@@ -6,6 +6,18 @@ module Artic
   class TimeRange < Range
     TIME_REGEX = /\A^(0\d|1\d|2[0-3]):[0-5]\d$\z/
 
+    class << self
+      # Builds a time range from the provided value.
+      #
+      # @param range [Range|TimeRange] a range of times (e.g. +'09:00'..'18:00'+ or
+      #   a +TimeRange+ object)
+      #
+      # @return [TimeRange] the passed time range or a new time range
+      def build(range)
+        range.is_a?(TimeRange) ? range : TimeRange.new(range.min, range.max)
+      end
+    end
+
     # Initializes a new range.
     #
     # @param min [String] the start time (in HH:MM format)
@@ -24,6 +36,18 @@ module Artic
     # @return [Boolean]
     def overlaps?(other)
       min <= other.max && max >= other.min
+    end
+
+    # Returns a range of +DateTime+ objects for this time range.
+    #
+    # @param date [Date] the date to use for the range
+    #
+    # @return [Range]
+    def with_date(date)
+      Range.new(
+        DateTime.parse("#{date} #{min}"),
+        DateTime.parse("#{date} #{max}")
+      )
     end
 
     private

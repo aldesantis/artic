@@ -20,6 +20,24 @@ RSpec.describe Artic::TimeRange do
     }.to raise_error(ArgumentError)
   end
 
+  describe '.build' do
+    context 'with a TimeRange' do
+      let(:existing_range) { described_class.new('09:00', '18:00') }
+
+      it 'returns the passed TimeRange' do
+        expect(described_class.build(existing_range)).to eq(existing_range)
+      end
+    end
+
+    context 'with a range of time strings' do
+      let(:range_of_times) { '09:00'..'18:00' }
+
+      it 'returns a new TimeRange' do
+        expect(described_class.build(range_of_times)).to eq(described_class.new('09:00', '18:00'))
+      end
+    end
+  end
+
   describe '#overlaps?' do
     it 'returns true when the two ranges intersect' do
       range1 = described_class.new('09:00', '18:00')

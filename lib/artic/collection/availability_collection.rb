@@ -11,6 +11,7 @@ module Artic
       #
       # @return AvailabilityCollection
       def by_identifier(identifier)
+        identifier = cast_identifier identifier
         availabilities = select { |availability| availability.identifier == identifier }
         self.class.new availabilities
       end
@@ -28,7 +29,7 @@ module Artic
       #
       # @return [Boolean]
       def identifier?(identifier)
-        identifiers.include?(identifier.is_a?(String) ? identifier.to_sym : identifier)
+        identifiers.include? cast_identifier(identifier)
       end
 
       # Normalizes all the availabilities in this collection by sorting them and merging any
@@ -70,6 +71,12 @@ module Artic
         end
 
         self.class.new normalized_availabilities
+      end
+
+      private
+
+      def cast_identifier(identifier)
+        identifier.is_a?(String) ? identifier.to_sym : identifier
       end
     end
   end

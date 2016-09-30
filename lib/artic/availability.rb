@@ -26,11 +26,7 @@ module Artic
     def initialize(dow_or_date, time_range)
       @date = dow_or_date if dow_or_date.is_a?(Date)
       @day_of_week = (@date ? @date.strftime('%A').downcase : dow_or_date).to_sym
-      @time_range = if time_range.is_a?(TimeRange)
-        time_range
-      else
-        TimeRange.new(time_range.min, time_range.max)
-      end
+      @time_range = TimeRange.build(time_range)
 
       validate_day_of_week
     end
