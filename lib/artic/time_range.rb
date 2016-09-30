@@ -36,7 +36,7 @@ module Artic
 
       fail(
         ArgumentError,
-        "#{min} is not a valid time"
+        "#{max} is not a valid time"
       ) unless max =~ TIME_REGEX
 
       fail(
