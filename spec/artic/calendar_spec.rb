@@ -64,13 +64,15 @@ RSpec.describe Artic::Calendar do
   describe '#free_slots_on' do
     before do
       calendar.availabilities << Artic::Availability.new(:monday, '09:00'..'18:00')
+      calendar.occupations << Artic::Occupation.new(Date.parse('2016-10-03'), '16:00'..'17:00')
       calendar.occupations << Artic::Occupation.new(Date.parse('2016-10-03'), '10:00'..'15:00')
     end
 
     it 'removes the occupations from the available slots' do
       expect(calendar.free_slots_on(Date.parse('2016-10-03'))).to eq([
         Artic::Availability.new(Date.parse('2016-10-03'), '09:00'..'10:00'),
-        Artic::Availability.new(Date.parse('2016-10-03'), '15:00'..'18:00')
+        Artic::Availability.new(Date.parse('2016-10-03'), '15:00'..'16:00'),
+        Artic::Availability.new(Date.parse('2016-10-03'), '17:00'..'18:00')
       ])
     end
   end

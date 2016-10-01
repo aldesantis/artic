@@ -41,46 +41,20 @@ module Artic
       availabilities.normalize dow_or_date
     end
 
-    # Returns the slots free on the given date, computed by taking the available slots for the date
-    # and removing any occupied portions.
+    # Returns the slots free on the given date, computed by calling {Occupation#bisect} on each
+    # of the availability slots.
+    #
+    # @param date [Date]
     #
     # @return Collection::AvailabilityCollection
+    #
+    # @see Collection::OccupationCollection#bisect
     def free_slots_on(date)
-      slots = available_slots_on(date).inject([]) do |accumulator, slot|
-        overlapping_occupations = occupations.select { |occ| occ.overlaps?(slot) }
-
-        # No overlapping sessions found: add the availability to the accumulator
-        next (accumulator << slot) if overlapping_occupations.empty?
-
-        # The session occupies the availability completely: remove the availability
-        next accumulator if overlapping_occupations.any? { |occ| occ.covers?(slot) }
-
-        accumulator + overlapping_occupations.inject([slot]) do |subaccumulator, occupation|
-          last_slot = subaccumulator.pop
-          slot_range = last_slot.time_range.with_date(occupation.date)
-          occupation_range = occupation.to_range
-
-          # If the occupation begins and ends before the availability, the availability starts
-          # when the occupation ends
-          if occupation_range.min <= slot_range.min && occupation_range.max <= slot_range.max
-            subaccumulator << (occupation_range.max..slot_range.max)
-          # If the occupation starts after the availability, but ends before, the availability is
-          # split in two
-          elsif occupation_range.min >= slot_range.min && occupation_range.max <= slot_range.max
-            subaccumulator + [
-              (slot_range.min..occupation_range.min),
-              (occupation_range.max..slot_range.max)
-            ]
-          end
-        end
-      end.map do |datetime_range|
-        Availability.new(datetime_range.min.to_date, Range.new(
-          datetime_range.min.strftime('%H:%M'),
-          datetime_range.max.strftime('%H:%M')
-        ))
+      availabilities = available_slots_on(date).flat_map do |availability|
+        occupations.bisect(availability)
       end
 
-      Collection::AvailabilityCollection.new(slots)
+      Collection::AvailabilityCollection.new availabilities
     end
   end
 end
