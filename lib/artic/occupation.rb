@@ -32,7 +32,7 @@ module Artic
     # @return [Boolean]
     def overlaps?(availability)
       availability_range = availability.time_range.with_date(date)
-      (availability_range.min - to_range.max) * (to_range.min - availability_range.max).positive?
+      ((availability_range.min - to_range.max) * (to_range.min - availability_range.max)) >= 0
     end
 
     # Returns whether the occupation covers the availability (i.e. whether all moments of the

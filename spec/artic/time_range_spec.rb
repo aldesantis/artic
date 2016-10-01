@@ -67,4 +67,15 @@ RSpec.describe Artic::TimeRange do
       expect(range1.overlaps?(range2)).to be false
     end
   end
+
+  describe '#with_date' do
+    let(:date) { Date.today }
+
+    it 'converts the time range to a range of DateTimes' do
+      expect(time_range.with_date(date)).to eq(Range.new(
+        DateTime.parse("#{date} #{time_range.min}"),
+        DateTime.parse("#{date} #{time_range.max}")
+      ))
+    end
+  end
 end
