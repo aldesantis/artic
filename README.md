@@ -1,5 +1,9 @@
 # A.R.TI.C.
 
+[![Build Status](https://img.shields.io/travis/alessandro1997/artic.svg?maxAge=3600&style=flat-square)](https://travis-ci.org/alessandro1997/artic)
+[![Dependency Status](https://img.shields.io/gemnasium/alessandro1997/artic.svg?maxAge=3600&style=flat-square)](https://gemnasium.com/github.com/alessandro1997/artic)
+[![Code Climate](https://img.shields.io/codeclimate/github/alessandro1997/artic.svg?maxAge=3600&style=flat-square)](https://codeclimate.com/github/alessandro1997/artic)
+
 **A** **R**uby gem for **TI**me **C**omputations.
 
 ## Installation
