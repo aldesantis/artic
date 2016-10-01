@@ -50,6 +50,10 @@ module Artic
       )
     end
 
+    def <=>(other)
+      min <=> other.min
+    end
+
     private
 
     def validate_range
