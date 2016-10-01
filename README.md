@@ -151,6 +151,3 @@ The gem is available as open source under the terms of the [MIT License](http://
 ## To do
 
 - [ ] Add support for buffer (e.g. I want 15 minutes between meetings)
-- [ ] Allow passing a timezone when defining availabilities
-- [ ] Write implementation
-- [ ] Write tests
