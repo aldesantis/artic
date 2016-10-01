@@ -110,7 +110,7 @@ calendar.available_slots_on(:monday)
 # We overrode this, remember?
 calendar.available_slots_on(Date.parse('2016-10-03'))
 # => [
-#   ActiveSupport::TimeWithZone<2016-09-26 15:00>..ActiveSupport::TimeWithZone<2016-09-26 19:00>
+#   DateTime<2016-09-26 15:00>..DateTime<2016-09-26 19:00>
 # ]
 ```
 
@@ -124,10 +124,14 @@ available slots:
 ```ruby
 calendar.free_slots_on(Date.parse('2016-09-26'))
 # => [
-#   ActiveSupport::TimeWithZone<2016-09-26 09:00>..ActiveSupport::TimeWithZone<2016-09-26 13:00>,
-#   ActiveSupport::TimeWithZone<2016-09-26 15:00>..ActiveSupport::TimeWithZone<2016-09-26 18:00>
+#   DateTime<2016-09-26 09:00>..DateTime<2016-09-26 13:00>,
+#   DateTime<2016-09-26 15:00>..DateTime<2016-09-26 18:00>
 # ]
 ```
+
+## Caveats
+
+- All times should be in the same timezone (ideally, UTC).
 
 ## Development
 
