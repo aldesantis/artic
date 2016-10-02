@@ -68,6 +68,10 @@ RSpec.describe Artic::TimeRange do
     end
   end
 
+  describe '#covers?' do
+    it 'test'
+  end
+
   describe '#with_date' do
     let(:date) { Date.today }
 
@@ -77,5 +81,9 @@ RSpec.describe Artic::TimeRange do
         DateTime.parse("#{date} #{time_range.max}")
       ))
     end
+  end
+
+  describe '#bisect' do
+    it 'test'
   end
 end

@@ -115,25 +115,10 @@ module Artic
       return Collection::AvailabilityCollection.new if covers?(availability)
       return Collection::AvailabilityCollection.new([availability]) unless overlaps?(availability)
 
-      availability_range = availability.time_range.with_date(date)
-
-      # @todo Move to TimeRange#bisect
-      if to_range.min <= availability_range.min && to_range.max <= availability_range.max
-        bisected_ranges = [to_range.max..availability_range.max]
-      elsif to_range.min >= availability_range.min && to_range.max <= availability_range.max
-        bisected_ranges = [
-          (availability_range.min..to_range.min),
-          (to_range.max..availability_range.max)
-        ]
-      elsif to_range.min >= availability_range.min && to_range.max >= availability_range.max
-        bisected_ranges = [availability_range.min..to_range.min]
-      end
+      bisected_ranges = time_range.bisect(availability.time_range)
 
       availabilities = bisected_ranges.map do |bisected_range|
-        Availability.new(bisected_range.min.to_date, Range.new(
-          bisected_range.min.strftime('%H:%M'),
-          bisected_range.max.strftime('%H:%M')
-        ))
+        Availability.new(date, bisected_range)
       end
 
       Collection::AvailabilityCollection.new availabilities

@@ -33,9 +33,20 @@ module Artic
     # Returns whether the two ranges overlap (i.e. whether there's at least a moment in time that
     # belongs to both ranges).
     #
+    # @param other [TimeRange]
+    #
     # @return [Boolean]
     def overlaps?(other)
       min <= other.max && max >= other.min
+    end
+
+    # Returns whether this range completely covers the one given.
+    #
+    # @param other [TimeRange]
+    #
+    # @return [Boolean]
+    def covers?(other)
+      min <= other.min && max >= other.max
     end
 
     # Returns a range of +DateTime+ objects for this time range.
@@ -48,6 +59,55 @@ module Artic
         DateTime.parse("#{date} #{min}"),
         DateTime.parse("#{date} #{max}")
       )
+    end
+
+    # Uses this range to bisect another.
+    #
+    # If this range does not overlap the other, returns an array with the original range.
+    #
+    # If this range completely covers the other, returns an empty array.
+    #
+    # @param other [TimeRange]
+    #
+    # @return [Array<TimeRange>]
+    #
+    # @example
+    #   range1 = TimeRange.new('10:00'..'12:00')
+    #   range2 = TimeRange.new('09:00'..'18:00')
+    #   range3 = TimeRange.new('08:00'..'11:00')
+    #
+    #   range1.bisect(range2)
+    #   # => [
+    #   #   #<TimeRange 09:00..10:00>,
+    #   #   #<TimeRange 12:00..18:00>
+    #   # ]
+    #
+    #   range2.bisect(range1)
+    #   # => []
+    #
+    #   range3.bisect(range2)
+    #   # => [
+    #   #   #<TimeRange 11:00..18:00>
+    #   # ]
+    #
+    #   range2.bisect(range3)
+    #   # => [
+    #   #   #<TimeRange 08:00..09:00>
+    #   # ]
+    def bisect(other)
+      return [other] unless overlaps?(other)
+      return [] if covers?(other)
+
+      if min <= other.min && max <= other.max
+        [max..other.max]
+      elsif min >= other.min && max <= other.max
+        [
+          (other.min..min),
+          (max..other.max)
+        ]
+      elsif min >= other.min && max >= other.max
+        [other.min..min]
+      end
     end
 
     private
