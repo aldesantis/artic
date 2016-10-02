@@ -6,10 +6,14 @@
 
 **A** **R**uby gem for **TI**me **C**omputations.
 
-A.R.TI.C. can solve problems like:
+A.R.TI.C. can take questions like:
 
 > If I'm available 9am-5pm on Mondays and I have a meeting from 10am to 1pm and another from 3pm
 > to 4pm next Monday, when am I _free_ next Monday?
+
+And give you an answer like:
+
+> You are free from 9am to 10am, from 1pm to 3pm and from 4pm to 5pm.
 
 ## Installation
 
