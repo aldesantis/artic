@@ -69,7 +69,16 @@ RSpec.describe Artic::TimeRange do
   end
 
   describe '#covers?' do
-    it 'test'
+    let(:range1) { described_class.new('09:00', '10:00') }
+    let(:range2) { described_class.new('08:00', '11:00') }
+
+    it 'returns true when the range covers the other' do
+      expect(range2.covers?(range1)).to be true
+    end
+
+    it 'returns false when the range does not cover the other' do
+      expect(range1.covers?(range2)).to be false
+    end
   end
 
   describe '#with_date' do
@@ -84,6 +93,22 @@ RSpec.describe Artic::TimeRange do
   end
 
   describe '#bisect' do
-    it 'test'
+    let(:range1) { described_class.new('09:00', '18:00') }
+    let(:range2) { described_class.new('12:00', '13:00') }
+
+    it 'returns the original range when the ranges do not overlap' do
+      expect(described_class.new('18:00', '20:00').bisect(range1)).to eq([range1])
+    end
+
+    it 'returns an empty array when the range covers the other' do
+      expect(range1.bisect(range2)).to eq([])
+    end
+
+    it 'bisects the provided range' do
+      expect(range2.bisect(range1)).to eq([
+        described_class.new('09:00', '12:00'),
+        described_class.new('13:00', '18:00')
+      ])
+    end
   end
 end
