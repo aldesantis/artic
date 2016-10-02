@@ -2,39 +2,32 @@
 RSpec.describe Artic::Calendar do
   subject(:calendar) { described_class.new }
 
-  let(:availability_collection) { instance_double('Artic::Collection::AvailabilityCollection') }
-  let(:occupation_collection) { instance_double('Artic::Collection::OccupationCollection') }
-
-  before do
-    allow(Artic::Collection::AvailabilityCollection).to receive(:new)
-      .and_return(availability_collection)
-
-    allow(Artic::Collection::OccupationCollection).to receive(:new)
-      .and_return(occupation_collection)
-  end
-
   it 'exposes availabilities' do
-    expect(availability_collection).to eq(availability_collection)
+    expect(calendar.availabilities).to be_instance_of(Artic::Collection::AvailabilityCollection)
   end
 
   it 'exposes occupations' do
-    expect(calendar.occupations).to eq(occupation_collection)
+    expect(calendar.occupations).to be_instance_of(Artic::Collection::OccupationCollection)
   end
 
   describe '#available_slots_on' do
     let(:slots) { calendar.available_slots_on(identifier) }
 
-    let(:normalized_availabilities) { instance_double('Artic::Collection::AvailabilityCollection') }
+    let(:normalized_availabilities) do
+      Artic::Collection::AvailabilityCollection.new([
+        Artic::Availability.new(Date.today, '09:00'..'18:00')
+      ])
+    end
 
     context 'when a valid identifier is passed' do
       let(:identifier) { [Date.today, :monday].sample }
 
       before do
-        allow(availability_collection).to receive(:identifier?)
+        allow(calendar.availabilities).to receive(:identifier?)
           .with(identifier)
           .and_return(true)
 
-        allow(availability_collection).to receive(:normalize)
+        allow(calendar.availabilities).to receive(:normalize)
           .with(identifier)
           .and_return(normalized_availabilities)
       end
@@ -49,15 +42,15 @@ RSpec.describe Artic::Calendar do
       let(:wday) { identifier.strftime('%A').downcase }
 
       before do
-        allow(availability_collection).to receive(:identifier?)
+        allow(calendar.availabilities).to receive(:identifier?)
           .with(identifier)
           .and_return(false)
 
-        allow(availability_collection).to receive(:identifier?)
+        allow(calendar.availabilities).to receive(:identifier?)
           .with(wday)
           .and_return(true)
 
-        allow(availability_collection).to receive(:normalize)
+        allow(calendar.availabilities).to receive(:normalize)
           .with(wday)
           .and_return(normalized_availabilities)
       end
@@ -69,38 +62,18 @@ RSpec.describe Artic::Calendar do
   end
 
   describe '#free_slots_on' do
-    let(:date) { Date.today }
-    let(:normalized_availabilities) { instance_double('Artic::Collection::AvailabilityCollection') }
-    let(:bisected_availabilities) do
-      [
-        instance_double('Artic::Availability'),
-        instance_double('Artic::Availability')
-      ]
-    end
-    let(:availability) { instance_double('Artic::Availability') }
-    let(:bisected_collection) { instance_double('Artic::Collection::AvailabilityCollection') }
-
     before do
-      allow(availability_collection).to receive(:identifier?)
-        .with(date)
-        .and_return(true)
-
-      allow(availability_collection).to receive(:normalize)
-        .with(date)
-        .and_return(normalized_availabilities)
-
-      allow(normalized_availabilities).to receive(:flat_map)
-        .and_yield(availability)
-
-      allow(occupation_collection).to receive(:bisect).and_return(bisected_availabilities)
-
-      allow(Artic::Collection::AvailabilityCollection).to receive(:new)
-        .with(bisected_availabilities)
-        .and_return(bisected_collection)
+      calendar.availabilities << Artic::Availability.new(:monday, '09:00'..'18:00')
+      calendar.occupations << Artic::Occupation.new(Date.parse('2016-10-03'), '16:00'..'17:00')
+      calendar.occupations << Artic::Occupation.new(Date.parse('2016-10-03'), '10:00'..'15:00')
     end
 
-    it 'returns a new collection with bisected availabilities' do
-      expect(calendar.free_slots_on(date)).to eq(bisected_collection)
+    it 'removes the occupations from the available slots' do
+      expect(calendar.free_slots_on(Date.parse('2016-10-03'))).to eq([
+        Artic::Availability.new(Date.parse('2016-10-03'), '09:00'..'10:00'),
+        Artic::Availability.new(Date.parse('2016-10-03'), '15:00'..'16:00'),
+        Artic::Availability.new(Date.parse('2016-10-03'), '17:00'..'18:00')
+      ])
     end
   end
 end

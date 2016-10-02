@@ -3,48 +3,50 @@ RSpec.describe Artic::Availability do
   subject(:availability) { described_class.new(date_or_dow, time_range) }
 
   let(:date_or_dow) { [Date.parse('2016-09-30'), :friday].sample }
-  let(:time_range) { instance_double('TimeRange') }
-
-  before { allow(TimeRange).to receive(:build).with(time_range).and_return(time_range) }
+  let(:time_range) { ['09:00'..'18:00', Artic::TimeRange.new('09:00', '18:00')].sample }
 
   context 'when initialized with a date' do
     subject(:availability) { described_class.new(date, time_range) }
 
     let(:date) { Date.parse('2016-09-30') }
-    let(:wday) { 'friday' }
+    let(:day_of_week) { 'friday' }
 
     it 'sets the date' do
       expect(availability.date).to eq(date)
     end
 
     it 'sets the day of the week' do
-      expect(availability.wday).to eq(wday.to_sym)
-    end
-
-    describe '#identifier' do
-      it 'returns the date' do
-        expect(availability.identifier).to eq(date)
-      end
+      expect(availability.day_of_week).to eq(day_of_week.to_sym)
     end
   end
 
   context 'when initialized with a day of the week' do
-    subject(:availability) { described_class.new(wday, time_range) }
+    subject(:availability) { described_class.new(day_of_week, time_range) }
 
-    let(:wday) { 'friday' }
+    let(:day_of_week) { 'friday' }
 
     it 'sets no date' do
       expect(availability.date).to be_nil
     end
 
     it 'sets the day of the week' do
-      expect(availability.wday).to eq(wday.to_sym)
+      expect(availability.day_of_week).to eq(day_of_week.to_sym)
     end
+  end
 
-    describe '#identifier' do
-      it 'returns the weekday' do
-        expect(availability.identifier).to eq(wday)
-      end
+  context 'when the time range is a Range' do
+    let(:time_range) { '09:00'..'18:00' }
+
+    it 'converts it into a TimeRange' do
+      expect(availability.time_range).to eq(Artic::TimeRange.new(time_range.min, time_range.max))
+    end
+  end
+
+  context 'when the time range is a TimeRange' do
+    let(:time_range) { Artic::TimeRange.new('09:00', '18:00') }
+
+    it 'keeps the passed argument' do
+      expect(availability.time_range).to eq(time_range)
     end
   end
 
