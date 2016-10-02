@@ -13,7 +13,11 @@ A.R.TI.C. can take questions like:
 
 And give you an answer like:
 
-> You are free from 9am to 10am, from 1pm to 3pm and from 4pm to 5pm.
+> You are free in these time slots:
+>
+> - 9am-10am;
+> - 1pm-3pm;
+> - 4pm-5pm.
 
 ## Installation
 
