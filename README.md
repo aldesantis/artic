@@ -1,5 +1,6 @@
 # A.R.TI.C.
 
+[![Gem Version](https://img.shields.io/gem/v/artic.svg?maxAge=3600&style=flat-square)](https://rubygems.org/gems/artic)
 [![Build Status](https://img.shields.io/travis/alessandro1997/artic.svg?maxAge=3600&style=flat-square)](https://travis-ci.org/alessandro1997/artic)
 [![Dependency Status](https://img.shields.io/gemnasium/alessandro1997/artic.svg?maxAge=3600&style=flat-square)](https://gemnasium.com/github.com/alessandro1997/artic)
 [![Code Climate](https://img.shields.io/codeclimate/github/alessandro1997/artic.svg?maxAge=3600&style=flat-square)](https://codeclimate.com/github/alessandro1997/artic)
