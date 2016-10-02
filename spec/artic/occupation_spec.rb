@@ -47,7 +47,7 @@ RSpec.describe Artic::Occupation do
       ].sort).to eq([
         Artic::Availability.new(Date.today, '08:00'..'08:00'),
         Artic::Availability.new(Date.today, '10:00'..'12:00'),
-        Artic::Availability.new(Date.today + 1, '13:00'..'15:00'),
+        Artic::Availability.new(Date.today + 1, '13:00'..'15:00')
       ])
     end
   end
