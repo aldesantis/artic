@@ -2,24 +2,6 @@
 RSpec.describe Artic::TimeRange do
   subject(:time_range) { described_class.new('09:00', '18:00') }
 
-  it 'cannot be initialized with an invalid start time' do
-    expect {
-      described_class.new('09:61', '18:00')
-    }.to raise_error(ArgumentError)
-  end
-
-  it 'cannot be initialized with an invalid end time' do
-    expect {
-      described_class.new('09:00', '24:00')
-    }.to raise_error(ArgumentError)
-  end
-
-  it 'cannot be initialized when the start time is after the end time' do
-    expect {
-      described_class.new('18:00', '09:00')
-    }.to raise_error(ArgumentError)
-  end
-
   describe '.build' do
     context 'with a TimeRange' do
       let(:existing_range) { described_class.new('09:00', '18:00') }
@@ -36,6 +18,24 @@ RSpec.describe Artic::TimeRange do
         expect(described_class.build(range_of_times)).to eq(described_class.new('09:00', '18:00'))
       end
     end
+  end
+
+  it 'cannot be initialized with an invalid start time' do
+    expect {
+      described_class.new('09:61', '18:00')
+    }.to raise_error(ArgumentError)
+  end
+
+  it 'cannot be initialized with an invalid end time' do
+    expect {
+      described_class.new('09:00', '24:00')
+    }.to raise_error(ArgumentError)
+  end
+
+  it 'cannot be initialized when the start time is after the end time' do
+    expect {
+      described_class.new('18:00', '09:00')
+    }.to raise_error(ArgumentError)
   end
 
   describe '#overlaps?' do

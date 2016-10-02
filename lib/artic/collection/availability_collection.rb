@@ -5,6 +5,13 @@ module Artic
     #
     # @author Alessandro Desantis
     class AvailabilityCollection < Array
+      # Returns all the identifiers in this collection.
+      #
+      # @return [Array<Symbol|Date>]
+      def identifiers
+        map(&:identifier).uniq
+      end
+
       # Returns all the availabilities with the given identifier.
       #
       # @param identifier [Symbol|Date] a weekday or a date
@@ -16,13 +23,6 @@ module Artic
         self.class.new availabilities
       end
 
-      # Returns all the identifiers in this collection.
-      #
-      # @return [Array<Symbol|Date>]
-      def identifiers
-        map(&:identifier).uniq
-      end
-
       # Returns whether an identifier exists in this collection.
       #
       # @param identifier [Symbol,Date]
@@ -30,20 +30,6 @@ module Artic
       # @return [Boolean]
       def identifier?(identifier)
         identifiers.include? cast_identifier(identifier)
-      end
-
-      # Normalizes all the availabilities in this collection by sorting them and merging any
-      # contiguous availability slots.
-      #
-      # @return AvailabilityCollection
-      #
-      # @see #normalize
-      def normalize_all
-        normalized_availabilities = identifiers.flat_map do |identifier|
-          normalize identifier
-        end
-
-        self.class.new normalized_availabilities.sort
       end
 
       # Normalizes all the availabilities with the given identifier in this collection by sorting
@@ -71,6 +57,20 @@ module Artic
         end
 
         self.class.new normalized_availabilities
+      end
+
+      # Normalizes all the availabilities in this collection by sorting them and merging any
+      # contiguous availability slots.
+      #
+      # @return AvailabilityCollection
+      #
+      # @see #normalize
+      def normalize_all
+        normalized_availabilities = identifiers.flat_map do |identifier|
+          normalize identifier
+        end
+
+        self.class.new normalized_availabilities.sort
       end
 
       private

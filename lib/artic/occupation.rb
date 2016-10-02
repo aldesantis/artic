@@ -102,6 +102,7 @@ module Artic
 
       availability_range = availability.time_range.with_date(date)
 
+      # @todo Move to TimeRange#bisect
       if to_range.min <= availability_range.min && to_range.max <= availability_range.max
         bisected_ranges = [to_range.max..availability_range.max]
       elsif to_range.min >= availability_range.min && to_range.max <= availability_range.max

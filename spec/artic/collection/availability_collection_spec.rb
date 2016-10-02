@@ -32,6 +32,16 @@ RSpec.describe Artic::Collection::AvailabilityCollection do
     end
   end
 
+  describe '#identifier?' do
+    it 'returns true with an existing identifier' do
+      expect(collection.identifier?(:monday)).to be true
+    end
+
+    it 'returns false with a non-existing identifier' do
+      expect(collection.identifier?(:foo)).to eq false
+    end
+  end
+
   describe '#normalize' do
     it 'returns another AvailabilityCollection' do
       expect(collection.normalize(:monday)).to be_instance_of(described_class)
