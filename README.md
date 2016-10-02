@@ -139,8 +139,3 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/alessa
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
-
-## To do
-
-- [ ] Add support for buffer (e.g. I want 15 minutes between meetings)
-- [ ] Add support for other time notations (e.g. `4:00`, `4pm`, ...)
