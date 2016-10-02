@@ -36,6 +36,11 @@ RSpec.describe Artic::Occupation do
       availability = Artic::Availability.new(Date.today, '13:15'..'14:00')
       expect(occupation.overlaps?(availability)).to be false
     end
+
+    it 'returns false if the availability is for another day' do
+      availability = Artic::Availability.new(Date.today + 1, '09:00'..'18:00')
+      expect(occupation.overlaps?(availability)).to be false
+    end
   end
 
   describe '#<=>' do
@@ -52,6 +57,29 @@ RSpec.describe Artic::Occupation do
     end
   end
 
+  describe '#==' do
+    it 'returns true when both the dates and the time ranges are equal' do
+      occupation1 = described_class.new(Date.today, '09:00'..'18:00')
+      occupation2 = described_class.new(Date.today, '09:00'..'18:00')
+
+      expect(occupation1).to eq(occupation2)
+    end
+
+    it 'returns false when the dates are different' do
+      occupation1 = described_class.new(Date.today, '09:00'..'18:00')
+      occupation2 = described_class.new(Date.today + 1, '09:00'..'18:00')
+
+      expect(occupation1).not_to eq(occupation2)
+    end
+
+    it 'returns false when the dates are the equal but the time ranges are not' do
+      occupation1 = described_class.new(Date.today, '09:00'..'18:00')
+      occupation2 = described_class.new(Date.today, '19:00'..'20:00')
+
+      expect(occupation1).not_to eq(occupation2)
+    end
+  end
+
   describe '#bisect' do
     let(:availability) { Artic::Availability.new(date.strftime('%A').downcase, '08:00'..'18:00') }
 
@@ -60,6 +88,22 @@ RSpec.describe Artic::Occupation do
         Artic::Availability.new(date, '08:00'..'09:00'),
         Artic::Availability.new(date, '13:00'..'18:00')
       ])
+    end
+
+    context 'when the occupation does not overlap the availability' do
+      let(:availability) { Artic::Availability.new(date + 1, '08:00'..'18:00') }
+
+      it 'returns the original availability' do
+        expect(occupation.bisect(availability)).to eq([availability])
+      end
+    end
+
+    context 'when the occupation covers the availability' do
+      let(:availability) { Artic::Availability.new(date, '10:00'..'11:00') }
+
+      it 'returns an empty collection' do
+        expect(occupation.bisect(availability)).to eq([])
+      end
     end
   end
 end

@@ -31,8 +31,10 @@ module Artic
     #
     # @return [Boolean]
     def overlaps?(availability)
+      return false unless availability.for_date?(date)
+
       availability_range = availability.time_range.with_date(date)
-      ((availability_range.min - to_range.max) * (to_range.min - availability_range.max)) >= 0
+      (availability_range.min <= to_range.max) && (availability_range.max >= to_range.min)
     end
 
     # Returns whether the occupation covers the availability (i.e. whether all moments of the
@@ -42,8 +44,21 @@ module Artic
     #
     # @return [Boolean]
     def covers?(availability)
+      return false unless availability.for_date?(date)
+
       availability_range = availability.time_range.with_date(date)
       to_range.min <= availability_range.min && to_range.max >= availability_range.max
+    end
+
+    # Determines whether this occupation and the one passed as an argument represent the same
+    # day/time range combination, by checking for equality of both the date and the time
+    # range.
+    #
+    # @param other [Occupation]
+    #
+    # @return [Boolean]
+    def ==(other)
+      date == other.date && time_range == other.time_range
     end
 
     # Compares this occupation with another one by comparing their ranges' start.
@@ -98,7 +113,7 @@ module Artic
     #   # ]
     def bisect(availability)
       return Collection::AvailabilityCollection.new if covers?(availability)
-      return Collection::AvailabilityCollection.new(availability) unless overlaps?(availability)
+      return Collection::AvailabilityCollection.new([availability]) unless overlaps?(availability)
 
       availability_range = availability.time_range.with_date(date)
 

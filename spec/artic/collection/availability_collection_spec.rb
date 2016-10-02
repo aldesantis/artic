@@ -23,15 +23,6 @@ RSpec.describe Artic::Collection::AvailabilityCollection do
     end
   end
 
-  describe '#by_identifier' do
-    it 'returns all availabilities for the given identifier' do
-      expect(collection.by_identifier(Date.parse('2016-09-30'))).to match_array([
-        Artic::Availability.new(Date.parse('2016-09-30'), '09:00'..'17:00'),
-        Artic::Availability.new(Date.parse('2016-09-30'), '12:00'..'18:00')
-      ])
-    end
-  end
-
   describe '#identifier?' do
     it 'returns true with an existing identifier' do
       expect(collection.identifier?(:monday)).to be true
@@ -42,12 +33,17 @@ RSpec.describe Artic::Collection::AvailabilityCollection do
     end
   end
 
-  describe '#normalize' do
-    it 'returns another AvailabilityCollection' do
-      expect(collection.normalize(:monday)).to be_instance_of(described_class)
+  describe '#by_identifier' do
+    it 'returns all availabilities for the given identifier' do
+      expect(collection.by_identifier(Date.parse('2016-09-30'))).to match_array([
+        Artic::Availability.new(Date.parse('2016-09-30'), '09:00'..'17:00'),
+        Artic::Availability.new(Date.parse('2016-09-30'), '12:00'..'18:00')
+      ])
     end
+  end
 
-    it 'sorts and merges slots for that identifier' do
+  describe '#normalize' do
+    it 'sorts and merges availabilities for that identifier' do
       expect(collection.normalize(:monday)).to eq([
         Artic::Availability.new(:monday, '09:00'..'13:00'),
         Artic::Availability.new(:monday, '15:00'..'19:00')
@@ -56,11 +52,7 @@ RSpec.describe Artic::Collection::AvailabilityCollection do
   end
 
   describe '#normalize_all' do
-    it 'returns another AvailabilityCollection' do
-      expect(collection.normalize_all).to be_instance_of(described_class)
-    end
-
-    it 'sorts and merges all slots' do
+    it 'sorts and merges all availabilities' do
       expect(collection.normalize_all).to eq([
         Artic::Availability.new(:monday, '09:00'..'13:00'),
         Artic::Availability.new(:monday, '15:00'..'19:00'),

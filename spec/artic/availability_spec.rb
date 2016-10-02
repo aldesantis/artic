@@ -50,6 +50,34 @@ RSpec.describe Artic::Availability do
     end
   end
 
+  describe '#for_date?' do
+    context 'with a date availability' do
+      subject(:availability) { Artic::Availability.new(Date.today, '09:00'..'18:00') }
+
+      it 'returns true when the date is the same' do
+        expect(subject.for_date?(Date.today)).to be true
+      end
+
+      it 'returns false when the date is not the same' do
+        expect(subject.for_date?(Date.today + 1)).to be false
+      end
+    end
+
+    context 'with a weekday availability' do
+      subject(:availability) do
+        Artic::Availability.new(Date.today.strftime('%A').downcase, '09:00'..'18:00')
+      end
+
+      it 'returns true when the weekday is the same' do
+        expect(subject.for_date?(Date.today)).to be true
+      end
+
+      it 'returns false when the weekday is not the same' do
+        expect(subject.for_date?(Date.today + 1)).to be false
+      end
+    end
+  end
+
   describe '#<=>' do
     let(:without_date) { described_class.new(:monday, time_range) }
     let(:with_date) { described_class.new(Date.parse('2016-09-30'), time_range) }

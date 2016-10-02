@@ -12,7 +12,16 @@ module Artic
         map(&:identifier).uniq
       end
 
-      # Returns all the availabilities with the given identifier.
+      # Returns whether an identifier exists in this collection.
+      #
+      # @param identifier [Symbol,Date]
+      #
+      # @return [Boolean]
+      def identifier?(identifier)
+        identifiers.include? cast_identifier(identifier)
+      end
+
+      # Returns all the availabilities with the given identifier, without normalizing them.
       #
       # @param identifier [Symbol|Date] a weekday or a date
       #
@@ -23,17 +32,10 @@ module Artic
         self.class.new availabilities
       end
 
-      # Returns whether an identifier exists in this collection.
-      #
-      # @param identifier [Symbol,Date]
-      #
-      # @return [Boolean]
-      def identifier?(identifier)
-        identifiers.include? cast_identifier(identifier)
-      end
-
       # Normalizes all the availabilities with the given identifier in this collection by sorting
       # them and merging any contiguous availability slots.
+      #
+      # @param identifier [Symbol|Date]
       #
       # @return AvailabilityCollection
       def normalize(identifier)

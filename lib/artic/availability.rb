@@ -39,6 +39,20 @@ module Artic
       date || day_of_week
     end
 
+    # Returns whether the availability is appliable to the given date (i.e. the date is the same
+    # or the weekday is the same).
+    #
+    # @param date [Date]
+    #
+    # @return [Boolean]
+    def for_date?(date)
+      if self.date
+        self.date == date
+      else
+        day_of_week == date.strftime('%A').downcase.to_sym
+      end
+    end
+
     # Determines whether this availability and the one passed as an argument represent the same
     # day/time range combination, by checking for equality of both the identifier and the time
     # range.
