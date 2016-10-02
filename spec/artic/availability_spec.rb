@@ -5,11 +5,7 @@ RSpec.describe Artic::Availability do
   let(:date_or_dow) { [Date.parse('2016-09-30'), :friday].sample }
   let(:time_range) { instance_double('TimeRange') }
 
-  before do
-    allow(Artic::TimeRange).to receive(:build) do |time_range|
-      time_range
-    end
-  end
+  before { allow(TimeRange).to receive(:build).with(time_range).and_return(time_range) }
 
   context 'when initialized with a date' do
     subject(:availability) { described_class.new(date, time_range) }
@@ -56,14 +52,6 @@ RSpec.describe Artic::Availability do
     let(:without_date) { described_class.new(:monday, time_range) }
     let(:with_date) { described_class.new(Date.parse('2016-09-30'), time_range) }
 
-    let(:before_time) { instance_double('Artic::TimeRange') }
-    let(:after_time) { instance_double('Artic::TimeRange') }
-
-    before do
-      allow(before_time).to receive(:<=>).with(after_time).and_return(-1)
-      allow(after_time).to receive(:<=>).with(before_time).and_return(1)
-    end
-
     context 'when one object has a date and the other one does not' do
       it 'puts objects without a date before those with a date' do
         expect(without_date <=> with_date).to eq(-1)
@@ -72,15 +60,15 @@ RSpec.describe Artic::Availability do
 
     context 'when both objects do not have a date' do
       it 'compares the time if the day of the week is the same' do
-        smaller_time = described_class.new(:monday, before_time)
-        greater_time = described_class.new(:monday, after_time)
+        smaller_time = described_class.new(:monday, '09:00'..'13:00')
+        greater_time = described_class.new(:monday, '15:00'..'19:00')
 
         expect(smaller_time <=> greater_time).to eq(-1)
       end
 
       it 'compares the day of the week if the day of the week is not the same' do
-        smaller_day = described_class.new(:monday, after_time)
-        greater_day = described_class.new(:tuesday, before_time)
+        smaller_day = described_class.new(:monday, '15:00'..'19:00')
+        greater_day = described_class.new(:tuesday, '09:00'..'13:00')
 
         expect(smaller_day <=> greater_day).to eq(-1)
       end
@@ -88,15 +76,15 @@ RSpec.describe Artic::Availability do
 
     context 'when both objects have a date' do
       it 'compares the times if the date is the same' do
-        smaller_time = described_class.new(Date.parse('2016-09-30'), before_time)
-        greater_time = described_class.new(Date.parse('2016-09-30'), after_time)
+        smaller_time = described_class.new(Date.parse('2016-09-30'), '09:00'..'13:00')
+        greater_time = described_class.new(Date.parse('2016-09-30'), '15:00'..'19:00')
 
         expect(smaller_time <=> greater_time).to eq(-1)
       end
 
       it 'compares the dates if the date is not the same' do
-        smaller_day = described_class.new(Date.parse('2016-09-29'), after_time)
-        greater_day = described_class.new(Date.parse('2016-09-30'), before_time)
+        smaller_day = described_class.new(Date.parse('2016-09-29'), '15:00'..'19:00')
+        greater_day = described_class.new(Date.parse('2016-09-30'), '09:00'..'13:00')
 
         expect(smaller_day <=> greater_day).to eq(-1)
       end

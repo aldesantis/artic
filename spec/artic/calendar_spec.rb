@@ -70,7 +70,7 @@ RSpec.describe Artic::Calendar do
 
   describe '#free_slots_on' do
     let(:date) { Date.today }
-    let(:normalized_availabilities) { [availability] }
+    let(:normalized_availabilities) { instance_double('Artic::Collection::AvailabilityCollection') }
     let(:bisected_availabilities) do
       [
         instance_double('Artic::Availability'),
@@ -88,6 +88,9 @@ RSpec.describe Artic::Calendar do
       allow(availability_collection).to receive(:normalize)
         .with(date)
         .and_return(normalized_availabilities)
+
+      allow(normalized_availabilities).to receive(:flat_map)
+        .and_yield(availability)
 
       allow(occupation_collection).to receive(:bisect).and_return(bisected_availabilities)
 
