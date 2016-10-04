@@ -14,7 +14,7 @@ module Artic
       #
       # @return [TimeRange] the passed time range or a new time range
       def build(range)
-        range.is_a?(TimeRange) ? range : TimeRange.new(range.min, range.max)
+        range.is_a?(TimeRange) ? range : TimeRange.new(range.begin, range.end)
       end
     end
 
