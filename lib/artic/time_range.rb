@@ -20,12 +20,12 @@ module Artic
 
     # Initializes a new range.
     #
-    # @param min [String] the start time (in HH:MM format)
-    # @param max [String] the end time (in HH:MM format)
+    # @param start_time [String] the start time (in HH:MM format)
+    # @param end_time [String] the end time (in HH:MM format)
     #
     # @raise [ArgumentError] if the start time or the end time is invalid
     # @raise [ArgumentError] if the start time is after the end time
-    def initialize(min, max)
+    def initialize(start_time, end_time)
       super
       validate_range
     end
@@ -37,7 +37,7 @@ module Artic
     #
     # @return [Boolean]
     def overlaps?(other)
-      min <= other.max && max >= other.min
+      self.begin <= other.end && self.end >= other.begin
     end
 
     # Returns whether this range completely covers the one given.
@@ -46,7 +46,7 @@ module Artic
     #
     # @return [Boolean]
     def covers?(other)
-      min <= other.min && max >= other.max
+      self.begin <= other.begin && self.end >= other.end
     end
 
     # Returns a range of +DateTime+ objects for this time range.
@@ -56,8 +56,8 @@ module Artic
     # @return [Range]
     def with_date(date)
       Range.new(
-        DateTime.parse("#{date} #{min}"),
-        DateTime.parse("#{date} #{max}")
+        DateTime.parse("#{date} #{self.begin}"),
+        DateTime.parse("#{date} #{self.end}")
       )
     end
 
@@ -98,15 +98,15 @@ module Artic
       return [other] unless overlaps?(other)
       return [] if covers?(other)
 
-      if min <= other.min && max <= other.max
-        [max..other.max]
-      elsif min >= other.min && max <= other.max
+      if self.begin <= other.begin && self.end <= other.end
+        [self.end..other.end]
+      elsif self.begin >= other.begin && self.end <= other.end
         [
-          (other.min..min),
-          (max..other.max)
+          (other.begin..self.begin),
+          (self.end..other.end)
         ]
-      elsif min >= other.min && max >= other.max
-        [other.min..min]
+      elsif self.begin >= other.begin && self.end >= other.end
+        [other.begin..self.begin]
       end
     end
 
@@ -115,18 +115,18 @@ module Artic
     def validate_range
       fail(
         ArgumentError,
-        "#{min} is not a valid time"
-      ) unless min =~ TIME_REGEX
+        "#{self.begin} is not a valid time"
+      ) unless self.begin =~ TIME_REGEX
 
       fail(
         ArgumentError,
-        "#{max} is not a valid time"
-      ) unless max =~ TIME_REGEX
+        "#{self.end} is not a valid time"
+      ) unless self.end =~ TIME_REGEX
 
       fail(
         ArgumentError,
-        "#{min} is greater than #{max}"
-      ) if min > max
+        "#{self.begin} is greater than #{self.end}"
+      ) if self.begin > self.end
     end
   end
 end
