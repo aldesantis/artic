@@ -84,7 +84,8 @@ module Artic
       # @see Occupation#bisect
       def bisect(availability)
         availabilities = normalize_all.inject([availability]) do |accumulator, occupation|
-          accumulator + occupation.bisect(accumulator.pop)
+          break accumulator if accumulator.empty?
+          accumulator + occupation.bisect(current_availability)
         end
 
         AvailabilityCollection.new availabilities
