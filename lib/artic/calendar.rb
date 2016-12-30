@@ -50,8 +50,9 @@ module Artic
     #
     # @see Collection::OccupationCollection#bisect
     def free_slots_on(date)
+      normalized_occupations = occupations.normalize(date)
       availabilities = available_slots_on(date).flat_map do |availability|
-        occupations.bisect(availability)
+        normalized_occupations.bisect(availability)
       end
 
       Collection::AvailabilityCollection.new availabilities
