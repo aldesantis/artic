@@ -20,26 +20,26 @@ Style/BlockDelimiters:
   Exclude:
     - 'spec/**/*'
 
-Style/AlignParameters:
+Layout/AlignParameters:
   EnforcedStyle: with_fixed_indentation
 
-Style/ClosingParenthesisIndentation:
+Layout/ClosingParenthesisIndentation:
   Enabled: false
 
 Metrics/LineLength:
   Max: 100
   AllowURI: true
 
-Style/FirstParameterIndentation:
+Layout/FirstParameterIndentation:
   Enabled: false
 
-Style/MultilineMethodCallIndentation:
+Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
-Style/IndentArray:
+Layout/IndentArray:
   EnforcedStyle: consistent
 
-Style/IndentHash:
+Layout/IndentHash:
   EnforcedStyle: consistent
 
 Style/SignalException:
@@ -49,14 +49,35 @@ Style/BracesAroundHashParameters:
   EnforcedStyle: context_dependent
 
 Lint/EndAlignment:
-  AlignWith: variable
+  EnforcedStyleAlignWith: variable
   AutoCorrect: true
 
 Style/AndOr:
   EnforcedStyle: conditionals
 
 Metrics/MethodLength:
-  Max: 15
+  Enabled: false
 
 RSpec/MessageExpectation:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/ExampleLength:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/AbcSize:
   Enabled: false

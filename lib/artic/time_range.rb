@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Artic
   # Represents a range of two times in the same day (e.g. 09:00-17:00).
   #
@@ -113,20 +114,26 @@ module Artic
     private
 
     def validate_range
-      fail(
-        ArgumentError,
-        "#{self.begin} is not a valid time"
-      ) unless self.begin =~ TIME_REGEX
+      unless self.begin =~ TIME_REGEX
+        fail(
+          ArgumentError,
+          "#{self.begin} is not a valid time"
+        )
+      end
 
-      fail(
-        ArgumentError,
-        "#{self.end} is not a valid time"
-      ) unless self.end =~ TIME_REGEX
+      unless self.end =~ TIME_REGEX
+        fail(
+          ArgumentError,
+          "#{self.end} is not a valid time"
+        )
+      end
 
-      fail(
-        ArgumentError,
-        "#{self.begin} is greater than #{self.end}"
-      ) if self.begin > self.end
+      if self.begin > self.end
+        fail(
+          ArgumentError,
+          "#{self.begin} is greater than #{self.end}"
+        )
+      end
     end
   end
 end

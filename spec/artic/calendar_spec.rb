@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe Artic::Calendar do
   subject(:calendar) { described_class.new }
 

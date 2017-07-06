@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe Artic::Occupation do
   subject(:occupation) { described_class.new(date, time_range) }
 

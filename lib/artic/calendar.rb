@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Artic
   # A calendar keeps track of both your availabilities and your occupations.
   #
@@ -34,9 +35,11 @@ module Artic
     #
     # @see Collection::AvailabilityCollection#normalize
     def available_slots_on(dow_or_date)
+      # rubocop:disable Metrics/LineLength
       if !availabilities.identifier?(dow_or_date) && dow_or_date.is_a?(Date) && availabilities.identifier?(dow_or_date.strftime('%A').downcase)
         return available_slots_on(dow_or_date.strftime('%A').downcase)
       end
+      # rubocop:enable Metrics/LineLength
 
       availabilities.normalize dow_or_date
     end

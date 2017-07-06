@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Artic
   module Collection
     # Keeps a collection of availabilities and performs calculations on them.
@@ -46,9 +47,11 @@ module Artic
 
           last_availability = accumulator.pop
 
-          next (
-            accumulator + [last_availability, availability]
-          ) unless last_availability.time_range.overlaps?(availability.time_range)
+          unless last_availability.time_range.overlaps?(availability.time_range)
+            next (
+              accumulator + [last_availability, availability]
+            )
+          end
 
           new_time_range = Range.new(
             [last_availability.time_range.min, availability.time_range.min].min,

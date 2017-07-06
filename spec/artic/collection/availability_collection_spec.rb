@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe Artic::Collection::AvailabilityCollection do
   subject(:collection) { described_class.new(availabilities) }
 

@@ -1,10 +1,11 @@
 # frozen_string_literal: true
+
 module Artic
   # Availability represents a slot of time in a givn day of the week or date when you're available.
   #
   # @author Alessandro Desantis
   class Availability
-    DAYS_OF_WEEK = %i(monday tuesday wednesday thursday friday saturday sunday).freeze
+    DAYS_OF_WEEK = %i[monday tuesday wednesday thursday friday saturday sunday].freeze
 
     # @!attribute [r] day_of_week
     #   @todo Rename to +wday+
@@ -101,10 +102,12 @@ module Artic
     private
 
     def validate_day_of_week
-      fail(
-        ArgumentError,
-        "#{day_of_week} is not a valid day of the week"
-      ) unless DAYS_OF_WEEK.include?(day_of_week)
+      unless DAYS_OF_WEEK.include?(day_of_week)
+        fail(
+          ArgumentError,
+          "#{day_of_week} is not a valid day of the week"
+        )
+      end
     end
   end
 end

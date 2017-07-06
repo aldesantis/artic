@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 module Artic
   module Collection
     # Keeps a collection of occupations.
@@ -45,9 +46,11 @@ module Artic
 
           last_occupation = accumulator.pop
 
-          next (
-            accumulator + [last_occupation, occupation]
-          ) unless last_occupation.time_range.overlaps?(occupation.time_range)
+          unless last_occupation.time_range.overlaps?(occupation.time_range)
+            next (
+              accumulator + [last_occupation, occupation]
+            )
+          end
 
           new_time_range = Range.new(
             [last_occupation.time_range.min, occupation.time_range.min].min,

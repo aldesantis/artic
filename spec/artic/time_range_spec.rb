@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 RSpec.describe Artic::TimeRange do
   subject(:time_range) { described_class.new('09:00', '18:00') }
 
