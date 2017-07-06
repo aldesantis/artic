@@ -23,7 +23,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'tzinfo', '~> 1.2.2'
-  spec.add_dependency 'tzinfo-data', '~> 1.2016.7'
+  spec.add_dependency 'tzinfo-data', '~> 1.2017.2'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
