@@ -1,9 +1,8 @@
 # A.R.TI.C.
 
-[![Gem Version](https://img.shields.io/gem/v/artic.svg?maxAge=3600&style=flat-square)](https://rubygems.org/gems/artic)
-[![Build Status](https://img.shields.io/travis/aldesantis/artic.svg?maxAge=3600&style=flat-square)](https://travis-ci.org/aldesantis/artic)
-[![Dependency Status](https://img.shields.io/gemnasium/aldesantis/artic.svg?maxAge=3600&style=flat-square)](https://gemnasium.com/github.com/aldesantis/artic)
-[![Code Climate](https://img.shields.io/codeclimate/github/aldesantis/artic.svg?maxAge=3600&style=flat-square)](https://codeclimate.com/github/aldesantis/artic)
+[![Build Status](https://travis-ci.org/aldesantis/artic.svg?branch=master)](https://travis-ci.org/aldesantis/artic)
+[![Dependency Status](https://gemnasium.com/badges/github.com/aldesantis/artic.svg)](https://gemnasium.com/github.com/aldesantis/artic)
+[![Maintainability](https://api.codeclimate.com/v1/badges/bfcbbf050bd58ab46798/maintainability)](https://codeclimate.com/github/aldesantis/artic/maintainability)
 
 **A** **R**uby gem for **TI**me **C**omputations.
 
