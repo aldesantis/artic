@@ -7,6 +7,12 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
 
+## [1.0.5]
+
+### Changed
+
+- Updated and linted codebase
+
 ## [1.0.4]
 
 ### Fixed
@@ -35,7 +41,8 @@ adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 First stable release.
 
-[Unreleased]: https://github.com/aldesantis/artic/compare/v1.0.4...HEAD
+[Unreleased]: https://github.com/aldesantis/artic/compare/v1.0.5...HEAD
+[1.0.5]: https://github.com/aldesantis/artic/compare/v1.0.4...v1.0.5
 [1.0.4]: https://github.com/aldesantis/artic/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/aldesantis/artic/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/aldesantis/artic/compare/v1.0.1...v1.0.2
