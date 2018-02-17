@@ -13,8 +13,12 @@ AllCops:
    - 'spec/rails_helper.rb'
    - 'spec/support/**/*'
    - 'config/**/*'
-   - 'Rakefile'
-   - 'Gemfile'
+   - '**/Rakefile'
+   - '**/Gemfile'
+
+RSpec/DescribeClass:
+  Exclude:
+    - 'spec/requests/**/*'
 
 Style/BlockDelimiters:
   Exclude:
@@ -55,13 +59,7 @@ Lint/EndAlignment:
 Style/AndOr:
   EnforcedStyle: conditionals
 
-Metrics/MethodLength:
-  Enabled: false
-
-RSpec/MessageExpectation:
-  Enabled: false
-
-Metrics/BlockLength:
+Style/MultilineBlockChain:
   Enabled: false
 
 RSpec/NamedSubject:
@@ -70,14 +68,38 @@ RSpec/NamedSubject:
 RSpec/ExampleLength:
   Enabled: false
 
-Style/GuardClause:
+Layout/MultilineMethodCallBraceLayout:
   Enabled: false
 
-Metrics/CyclomaticComplexity:
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
   Enabled: false
 
 Metrics/PerceivedComplexity:
   Enabled: false
 
-Metrics/AbcSize:
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Naming/MethodName:
+  Enabled: false
+
+Naming/AccessorMethodName:
+  Enabled: false
+
+RSpec/MessageSpies:
+  EnforcedStyle: receive
+
+Style/GuardClause:
   Enabled: false

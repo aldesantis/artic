@@ -85,10 +85,10 @@ RSpec.describe Artic::TimeRange do
   describe '#with_date' do
     let(:date) { Date.today }
 
-    it 'converts the time range to a range of DateTimes' do
+    it 'converts the time range to a range of Times' do
       expect(time_range.with_date(date)).to eq(Range.new(
-        DateTime.parse("#{date} #{time_range.min}"),
-        DateTime.parse("#{date} #{time_range.max}")
+        Time.parse("#{date} #{time_range.min}"),
+        Time.parse("#{date} #{time_range.max}")
       ))
     end
   end

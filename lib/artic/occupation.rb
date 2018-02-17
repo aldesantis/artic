@@ -16,7 +16,7 @@ module Artic
       @time_range = TimeRange.build(time_range)
     end
 
-    # Converts the occupation to a range of +DateTime+ objects.
+    # Converts the occupation to a range of +Time+ objects.
     #
     # @return [Range]
     #

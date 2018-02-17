@@ -50,15 +50,15 @@ module Artic
       self.begin <= other.begin && self.end >= other.end
     end
 
-    # Returns a range of +DateTime+ objects for this time range.
+    # Returns a range of +Time+ objects for this time range.
     #
     # @param date [Date] the date to use for the range
     #
     # @return [Range]
     def with_date(date)
       Range.new(
-        DateTime.parse("#{date} #{self.begin}"),
-        DateTime.parse("#{date} #{self.end}")
+        Time.parse("#{date} #{self.begin}"),
+        Time.parse("#{date} #{self.end}")
       )
     end
 

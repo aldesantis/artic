@@ -81,6 +81,7 @@ module Artic
       return -1 if date.nil? && !other.date.nil?
       return 1 if !date.nil? && other.date.nil?
 
+      # rubocop:disable Style/IfInsideElse
       if date.nil? && other.date.nil? # both availabilities are for a weekday
         if day_of_week == other.day_of_week # availabilities are for the same weekday
           time_range.min <=> other.time_range.min # compare times
@@ -97,16 +98,14 @@ module Artic
           date <=> other.date # compare dates
         end
       end
+      # rubocop:enable Style/IfInsideElse
     end
 
     private
 
     def validate_day_of_week
       unless DAYS_OF_WEEK.include?(day_of_week)
-        fail(
-          ArgumentError,
-          "#{day_of_week} is not a valid day of the week"
-        )
+        fail ArgumentError, "#{day_of_week} is not a valid day of the week"
       end
     end
   end

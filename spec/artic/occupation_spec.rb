@@ -7,10 +7,10 @@ RSpec.describe Artic::Occupation do
   let(:time_range) { '09:00'..'13:00' }
 
   describe '#to_range' do
-    it 'converts the occupation to a range of DateTimes' do
+    it 'converts the occupation to a range of Times' do
       expect(occupation.to_range).to eq(Range.new(
-        DateTime.parse("#{date} #{time_range.min}"),
-        DateTime.parse("#{date} #{time_range.max}")
+        Time.parse("#{date} #{time_range.min}"),
+        Time.parse("#{date} #{time_range.max}")
       ))
     end
   end
