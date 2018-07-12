@@ -1,7 +1,6 @@
 # A.R.TI.C.
 
 [![Build Status](https://travis-ci.org/aldesantis/artic.svg?branch=master)](https://travis-ci.org/aldesantis/artic)
-[![Dependency Status](https://gemnasium.com/badges/github.com/aldesantis/artic.svg)](https://gemnasium.com/github.com/aldesantis/artic)
 [![Maintainability](https://api.codeclimate.com/v1/badges/bfcbbf050bd58ab46798/maintainability)](https://codeclimate.com/github/aldesantis/artic/maintainability)
 [![Coverage Status](https://coveralls.io/repos/github/aldesantis/artic/badge.svg?branch=master)](https://coveralls.io/github/aldesantis/artic?branch=master)
 
