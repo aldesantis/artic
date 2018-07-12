@@ -114,14 +114,14 @@ module Artic
     private
 
     def validate_range
-      unless self.begin =~ TIME_REGEX
+      unless TIME_REGEX.match?(self.begin)
         fail(
           ArgumentError,
           "#{self.begin} is not a valid time"
         )
       end
 
-      unless self.end =~ TIME_REGEX
+      unless TIME_REGEX.match?(self.end)
         fail(
           ArgumentError,
           "#{self.end} is not a valid time"
