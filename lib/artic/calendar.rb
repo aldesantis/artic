@@ -39,6 +39,7 @@ module Artic
       if !availabilities.identifier?(dow_or_date) && dow_or_date.is_a?(Date) && availabilities.identifier?(dow_or_date.strftime('%A').downcase)
         return available_slots_on(dow_or_date.strftime('%A').downcase)
       end
+
       # rubocop:enable Metrics/LineLength
 
       availabilities.normalize dow_or_date

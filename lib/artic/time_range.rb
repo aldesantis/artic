@@ -5,7 +5,7 @@ module Artic
   #
   # @author Alessandro Desantis
   class TimeRange < Range
-    TIME_REGEX = /\A^(0\d|1\d|2[0-3]):[0-5]\d$\z/
+    TIME_REGEX = /\A^(0\d|1\d|2[0-3]):[0-5]\d$\z/.freeze
 
     class << self
       # Builds a time range from the provided value.
